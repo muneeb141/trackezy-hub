@@ -9,6 +9,7 @@ import Header from "./components/layout/Header";
 import Sidebar from "./components/layout/Sidebar";
 import Dashboard from "./pages/Dashboard";
 import Board from "./pages/Board";
+import Documents from "./pages/Documents";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
                 <Routes>
                   <Route path="/" element={<Dashboard />} />
                   <Route path="/board" element={<Board />} />
+                  <Route path="/documents" element={<Documents />} />
                   {/* Add more routes here as needed */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>
