@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { MoreHorizontal } from 'lucide-react';
-import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { cn } from '@/lib/utils';
 
 type TaskCardProps = {
@@ -66,15 +65,15 @@ export const TaskCard = ({ task, className, onDragStart }: TaskCardProps) => {
       
       {task.assignee && (
         <div className="flex items-center mt-2">
-          <Avatar className="h-6 w-6 mr-2">
+          <div className="h-6 w-6 mr-2 rounded-full bg-muted flex items-center justify-center overflow-hidden">
             {task.assignee.avatar ? (
-              <AvatarImage src={task.assignee.avatar} alt={task.assignee.name} />
+              <img src={task.assignee.avatar} alt={task.assignee.name} className="h-full w-full object-cover" />
             ) : (
-              <AvatarFallback>
+              <span className="text-xs font-medium">
                 {task.assignee.name.charAt(0)}
-              </AvatarFallback>
+              </span>
             )}
-          </Avatar>
+          </div>
           <span className="text-xs text-muted-foreground truncate">
             {task.assignee.name}
           </span>
