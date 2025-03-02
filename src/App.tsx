@@ -10,6 +10,11 @@ import Sidebar from "./components/layout/Sidebar";
 import Dashboard from "./pages/Dashboard";
 import Board from "./pages/Board";
 import Documents from "./pages/Documents";
+import Calendar from "./pages/Calendar";
+import Team from "./pages/Team";
+import Reports from "./pages/Reports";
+import Settings from "./pages/Settings";
+import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,7 +35,11 @@ const App = () => (
                   <Route path="/" element={<Dashboard />} />
                   <Route path="/board" element={<Board />} />
                   <Route path="/documents" element={<Documents />} />
-                  {/* Add more routes here as needed */}
+                  <Route path="/calendar" element={<Calendar />} />
+                  <Route path="/team" element={<Team />} />
+                  <Route path="/reports" element={<Reports />} />
+                  <Route path="/settings" element={<Settings />} />
+                  <Route path="/profile" element={<Profile />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </AnimatePresence>

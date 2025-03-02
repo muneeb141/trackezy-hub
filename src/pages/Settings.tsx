@@ -1,296 +1,343 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Bell, Check, ChevronRight, Globe, Lock, Moon, Palette, Shield, User, Users, Zap } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
+import { Bell, Globe, Key, Lock, Mail, User, Shield, Layers, CreditCard, Moon, Sun, PanelLeft, Monitor } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Switch } from '@/components/ui/switch';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { Switch } from '@/components/ui/switch';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import PageTransition from '@/components/ui/PageTransition';
 
 const SettingsPage = () => {
+  const [theme, setTheme] = useState<'light' | 'dark' | 'system'>('system');
+
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="container mx-auto py-6 max-w-7xl"
-    >
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
-        <div>
+    <PageTransition>
+      <div className="container mx-auto py-6">
+        <div className="mb-6">
           <h1 className="text-2xl font-bold tracking-tight">Settings</h1>
           <p className="text-muted-foreground">Manage your account and application preferences</p>
         </div>
-        <div className="flex items-center gap-2 mt-4 md:mt-0">
-          <Button>Save Changes</Button>
-        </div>
-      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-[240px_1fr] gap-6">
-        <Card className="md:row-span-2">
-          <CardContent className="p-4">
-            <nav className="space-y-1">
-              {[
-                { icon: User, label: 'Profile', active: false },
-                { icon: Bell, label: 'Notifications', active: false },
-                { icon: Palette, label: 'Appearance', active: true },
-                { icon: Globe, label: 'Language', active: false },
-                { icon: Zap, label: 'Performance', active: false },
-                { icon: Shield, label: 'Security', active: false },
-                { icon: Users, label: 'Teams', active: false },
-                { icon: Lock, label: 'Permissions', active: false },
-              ].map((item) => (
-                <div
-                  key={item.label}
-                  className={`flex items-center justify-between px-3 py-2 rounded-md ${
-                    item.active
-                      ? 'bg-primary text-primary-foreground'
-                      : 'text-muted-foreground hover:bg-muted hover:text-foreground'
-                  } transition-colors cursor-pointer`}
-                >
-                  <div className="flex items-center">
-                    <item.icon className="mr-2 h-4 w-4" />
-                    <span>{item.label}</span>
-                  </div>
-                  {item.active ? (
-                    <Check className="h-4 w-4" />
-                  ) : (
-                    <ChevronRight className="h-4 w-4 opacity-70" />
-                  )}
-                </div>
-              ))}
-            </nav>
-          </CardContent>
-        </Card>
-
-        <div className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Appearance</CardTitle>
-              <CardDescription>
-                Customize how Trackezy looks and feels
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="space-y-4">
-                <div>
-                  <h3 className="text-sm font-medium mb-3">Theme</h3>
-                  <div className="grid grid-cols-3 gap-3">
-                    <div className="cursor-pointer bg-white border-2 border-primary rounded-lg p-2 flex flex-col items-center space-y-2">
-                      <div className="h-12 w-full bg-white border rounded"></div>
-                      <span className="text-xs font-medium">Light</span>
-                    </div>
-                    <div className="cursor-pointer bg-black border-2 border-transparent rounded-lg p-2 flex flex-col items-center space-y-2">
-                      <div className="h-12 w-full bg-gray-900 border border-gray-700 rounded"></div>
-                      <span className="text-xs font-medium text-white">Dark</span>
-                    </div>
-                    <div className="cursor-pointer bg-gradient-to-r from-white to-gray-900 border-2 border-transparent rounded-lg p-2 flex flex-col items-center space-y-2">
-                      <div className="h-12 w-full bg-gradient-to-r from-white to-gray-900 border rounded"></div>
-                      <span className="text-xs font-medium">System</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <Label htmlFor="enable-animations" className="flex items-center space-x-2">
-                      <span>Enable animations</span>
-                    </Label>
-                    <Switch id="enable-animations" defaultChecked />
-                  </div>
-                  <p className="text-sm text-muted-foreground">
-                    Enable or disable interface animations throughout the application
-                  </p>
-                </div>
-
-                <Separator />
-
-                <div>
-                  <h3 className="text-sm font-medium mb-3">Color Scheme</h3>
-                  <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
-                    {[
-                      { color: 'bg-blue-600', name: 'Blue', selected: false },
-                      { color: 'bg-purple-600', name: 'Purple', selected: true },
-                      { color: 'bg-green-600', name: 'Green', selected: false },
-                      { color: 'bg-amber-600', name: 'Amber', selected: false },
-                      { color: 'bg-rose-600', name: 'Rose', selected: false },
-                    ].map((scheme) => (
-                      <div
-                        key={scheme.name}
-                        className={`cursor-pointer rounded-md p-2 flex flex-col items-center space-y-1 ${
-                          scheme.selected ? 'ring-2 ring-primary ring-offset-2' : ''
-                        }`}
-                      >
-                        <div className={`h-8 w-8 rounded-full ${scheme.color}`}></div>
-                        <span className="text-xs">{scheme.name}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Sidebar Customization</CardTitle>
-              <CardDescription>
-                Configure how the sidebar displays content
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <Label htmlFor="compact-sidebar" className="flex items-center space-x-2">
-                      <span>Compact sidebar</span>
-                    </Label>
-                    <Switch id="compact-sidebar" />
-                  </div>
-                  <p className="text-sm text-muted-foreground">
-                    Use a narrower sidebar with icons only
-                  </p>
-                </div>
-
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <Label htmlFor="auto-collapse" className="flex items-center space-x-2">
-                      <span>Auto-collapse on small screens</span>
-                    </Label>
-                    <Switch id="auto-collapse" defaultChecked />
-                  </div>
-                  <p className="text-sm text-muted-foreground">
-                    Automatically collapse sidebar on mobile devices
-                  </p>
-                </div>
-
-                <div>
-                  <Label htmlFor="sidebar-position">Sidebar position</Label>
-                  <select
-                    id="sidebar-position"
-                    className="w-full mt-1 rounded-md border border-input bg-background px-3 py-2 text-sm"
-                  >
-                    <option value="left">Left (Default)</option>
-                    <option value="right">Right</option>
-                  </select>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        <Card>
-          <CardHeader>
-            <Tabs defaultValue="editor">
-              <TabsList className="grid w-full grid-cols-3">
-                <TabsTrigger value="editor">Editor</TabsTrigger>
-                <TabsTrigger value="display">Display</TabsTrigger>
-                <TabsTrigger value="advanced">Advanced</TabsTrigger>
+        <Tabs defaultValue="account" className="w-full">
+          <div className="flex flex-col md:flex-row gap-6">
+            <div className="md:w-64 shrink-0">
+              <TabsList className="flex flex-col h-auto bg-transparent p-0 space-y-1">
+                <TabsTrigger value="account" className="justify-start w-full">
+                  <User className="h-4 w-4 mr-2" />
+                  Account
+                </TabsTrigger>
+                <TabsTrigger value="security" className="justify-start w-full">
+                  <Lock className="h-4 w-4 mr-2" />
+                  Security
+                </TabsTrigger>
+                <TabsTrigger value="notifications" className="justify-start w-full">
+                  <Bell className="h-4 w-4 mr-2" />
+                  Notifications
+                </TabsTrigger>
+                <TabsTrigger value="appearance" className="justify-start w-full">
+                  <Monitor className="h-4 w-4 mr-2" />
+                  Appearance
+                </TabsTrigger>
+                <TabsTrigger value="workspace" className="justify-start w-full">
+                  <Layers className="h-4 w-4 mr-2" />
+                  Workspace
+                </TabsTrigger>
+                <TabsTrigger value="billing" className="justify-start w-full">
+                  <CreditCard className="h-4 w-4 mr-2" />
+                  Billing
+                </TabsTrigger>
               </TabsList>
-            </Tabs>
-          </CardHeader>
-          <CardContent>
-            <TabsContent value="editor" className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="font-size">Font Size</Label>
-                <select
-                  id="font-size"
-                  className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                >
-                  <option value="small">Small</option>
-                  <option value="medium" selected>Medium</option>
-                  <option value="large">Large</option>
-                </select>
-              </div>
+            </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="line-height">Line Height</Label>
-                <select
-                  id="line-height"
-                  className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                >
-                  <option value="compact">Compact</option>
-                  <option value="normal" selected>Normal</option>
-                  <option value="relaxed">Relaxed</option>
-                </select>
-              </div>
-              
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="code-folding" className="flex items-center space-x-2">
-                    <span>Code folding</span>
-                  </Label>
-                  <Switch id="code-folding" defaultChecked />
-                </div>
-              </div>
-            </TabsContent>
-            
-            <TabsContent value="display" className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="date-format">Date Format</Label>
-                <select
-                  id="date-format"
-                  className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                >
-                  <option value="mm/dd/yyyy">MM/DD/YYYY</option>
-                  <option value="dd/mm/yyyy">DD/MM/YYYY</option>
-                  <option value="yyyy/mm/dd">YYYY/MM/DD</option>
-                </select>
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="timezone">Timezone</Label>
-                <select
-                  id="timezone"
-                  className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                >
-                  <option value="utc">UTC</option>
-                  <option value="est">Eastern Time (EST)</option>
-                  <option value="pst">Pacific Time (PST)</option>
-                  <option value="gmt">GMT</option>
-                </select>
-              </div>
-              
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="24-hour-time" className="flex items-center space-x-2">
-                    <span>Use 24-hour time</span>
-                  </Label>
-                  <Switch id="24-hour-time" />
-                </div>
-              </div>
-            </TabsContent>
-            
-            <TabsContent value="advanced" className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="data-refresh">Data refresh interval (seconds)</Label>
-                <Input id="data-refresh" type="number" defaultValue="30" min="5" max="300" />
-              </div>
-              
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="dev-mode" className="flex items-center space-x-2">
-                    <span>Developer mode</span>
-                  </Label>
-                  <Switch id="dev-mode" />
-                </div>
-                <p className="text-sm text-muted-foreground">
-                  Enable additional debugging tools and detailed logging
-                </p>
-              </div>
-              
-              <div className="space-y-2">
-                <Button variant="outline" className="w-full">
-                  Clear Application Cache
-                </Button>
-              </div>
-            </TabsContent>
-          </CardContent>
-        </Card>
+            <div className="flex-1">
+              <TabsContent value="account" className="space-y-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Profile Information</CardTitle>
+                    <CardDescription>Update your personal details</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="first-name">First name</Label>
+                        <Input id="first-name" defaultValue="Alex" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="last-name">Last name</Label>
+                        <Input id="last-name" defaultValue="Johnson" />
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="email">Email</Label>
+                      <Input id="email" type="email" defaultValue="alex.johnson@example.com" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="bio">Bio</Label>
+                      <Input
+                        id="bio"
+                        defaultValue="Project manager with 5+ years of experience in software development."
+                      />
+                    </div>
+                  </CardContent>
+                  <CardFooter>
+                    <Button>Save Changes</Button>
+                  </CardFooter>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Language & Region</CardTitle>
+                    <CardDescription>Set your language and regional preferences</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="language">Language</Label>
+                      <Select defaultValue="en">
+                        <SelectTrigger id="language">
+                          <SelectValue placeholder="Select language" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="en">English</SelectItem>
+                          <SelectItem value="fr">French</SelectItem>
+                          <SelectItem value="de">German</SelectItem>
+                          <SelectItem value="es">Spanish</SelectItem>
+                          <SelectItem value="pt">Portuguese</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="timezone">Timezone</Label>
+                      <Select defaultValue="pst">
+                        <SelectTrigger id="timezone">
+                          <SelectValue placeholder="Select timezone" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="pst">Pacific Time (PST)</SelectItem>
+                          <SelectItem value="mst">Mountain Time (MST)</SelectItem>
+                          <SelectItem value="cst">Central Time (CST)</SelectItem>
+                          <SelectItem value="est">Eastern Time (EST)</SelectItem>
+                          <SelectItem value="utc">Universal Time (UTC)</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </CardContent>
+                  <CardFooter>
+                    <Button>Save Preferences</Button>
+                  </CardFooter>
+                </Card>
+              </TabsContent>
+
+              <TabsContent value="security" className="space-y-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Password</CardTitle>
+                    <CardDescription>Change your password</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="current-password">Current password</Label>
+                      <Input id="current-password" type="password" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="new-password">New password</Label>
+                      <Input id="new-password" type="password" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="confirm-password">Confirm password</Label>
+                      <Input id="confirm-password" type="password" />
+                    </div>
+                  </CardContent>
+                  <CardFooter>
+                    <Button>Update Password</Button>
+                  </CardFooter>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Two-Factor Authentication</CardTitle>
+                    <CardDescription>Add an extra layer of security to your account</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div className="space-y-0.5">
+                        <div className="font-medium">Authenticator App</div>
+                        <div className="text-sm text-muted-foreground">
+                          Use an authenticator app to generate one-time codes
+                        </div>
+                      </div>
+                      <Switch />
+                    </div>
+                    <Separator />
+                    <div className="flex items-center justify-between">
+                      <div className="space-y-0.5">
+                        <div className="font-medium">Text Message</div>
+                        <div className="text-sm text-muted-foreground">
+                          Receive codes via SMS to verify your identity
+                        </div>
+                      </div>
+                      <Switch />
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              <TabsContent value="notifications" className="space-y-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Notification Preferences</CardTitle>
+                    <CardDescription>Manage how you receive notifications</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div className="space-y-0.5">
+                        <div className="font-medium">Email Notifications</div>
+                        <div className="text-sm text-muted-foreground">
+                          Receive notifications via email
+                        </div>
+                      </div>
+                      <Switch defaultChecked />
+                    </div>
+                    <Separator />
+                    <div className="flex items-center justify-between">
+                      <div className="space-y-0.5">
+                        <div className="font-medium">Push Notifications</div>
+                        <div className="text-sm text-muted-foreground">
+                          Receive notifications in the browser
+                        </div>
+                      </div>
+                      <Switch defaultChecked />
+                    </div>
+                    <Separator />
+                    <div className="flex items-center justify-between">
+                      <div className="space-y-0.5">
+                        <div className="font-medium">Task Assignments</div>
+                        <div className="text-sm text-muted-foreground">
+                          Notify me when I'm assigned to a task
+                        </div>
+                      </div>
+                      <Switch defaultChecked />
+                    </div>
+                    <Separator />
+                    <div className="flex items-center justify-between">
+                      <div className="space-y-0.5">
+                        <div className="font-medium">Task Updates</div>
+                        <div className="text-sm text-muted-foreground">
+                          Notify me when a task I'm assigned to is updated
+                        </div>
+                      </div>
+                      <Switch defaultChecked />
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              <TabsContent value="appearance" className="space-y-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Theme</CardTitle>
+                    <CardDescription>Manage the appearance of the application</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-4">
+                      <div className="grid grid-cols-3 gap-4">
+                        <div 
+                          className={`border rounded-md p-4 cursor-pointer ${theme === 'light' ? 'border-primary ring-2 ring-primary/20' : ''}`}
+                          onClick={() => setTheme('light')}
+                        >
+                          <div className="flex justify-center mb-2">
+                            <Sun className="h-5 w-5" />
+                          </div>
+                          <div className="text-center text-sm font-medium">Light</div>
+                        </div>
+                        <div 
+                          className={`border rounded-md p-4 cursor-pointer ${theme === 'dark' ? 'border-primary ring-2 ring-primary/20' : ''}`}
+                          onClick={() => setTheme('dark')}
+                        >
+                          <div className="flex justify-center mb-2">
+                            <Moon className="h-5 w-5" />
+                          </div>
+                          <div className="text-center text-sm font-medium">Dark</div>
+                        </div>
+                        <div 
+                          className={`border rounded-md p-4 cursor-pointer ${theme === 'system' ? 'border-primary ring-2 ring-primary/20' : ''}`}
+                          onClick={() => setTheme('system')}
+                        >
+                          <div className="flex justify-center mb-2">
+                            <Monitor className="h-5 w-5" />
+                          </div>
+                          <div className="text-center text-sm font-medium">System</div>
+                        </div>
+                      </div>
+                    </div>
+                    <Separator />
+                    <div className="flex items-center justify-between">
+                      <div className="space-y-0.5">
+                        <div className="font-medium">Sidebar</div>
+                        <div className="text-sm text-muted-foreground">
+                          Show or hide the sidebar by default
+                        </div>
+                      </div>
+                      <Switch defaultChecked />
+                    </div>
+                  </CardContent>
+                  <CardFooter>
+                    <Button>Save Preferences</Button>
+                  </CardFooter>
+                </Card>
+              </TabsContent>
+
+              <TabsContent value="workspace" className="space-y-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Workspace Settings</CardTitle>
+                    <CardDescription>Manage your workspace preferences</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="workspace-name">Workspace Name</Label>
+                      <Input id="workspace-name" defaultValue="ProjectFlow Team" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="workspace-description">Description</Label>
+                      <Input id="workspace-description" defaultValue="Main project management workspace" />
+                    </div>
+                  </CardContent>
+                  <CardFooter>
+                    <Button>Save Settings</Button>
+                  </CardFooter>
+                </Card>
+              </TabsContent>
+
+              <TabsContent value="billing" className="space-y-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Billing Information</CardTitle>
+                    <CardDescription>Manage your billing information and view your subscriptions</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4 text-center py-10">
+                    <div className="flex justify-center items-center">
+                      <CreditCard className="h-12 w-12 text-primary opacity-20" />
+                    </div>
+                    <h3 className="mt-4 text-lg font-medium">Billing Information</h3>
+                    <p className="mt-2 text-sm text-muted-foreground max-w-sm mx-auto">
+                      This section would display billing details, subscription plans and payment methods.
+                    </p>
+                    <div className="mt-4">
+                      <Button>Manage Subscription</Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+            </div>
+          </div>
+        </Tabs>
       </div>
-    </motion.div>
+    </PageTransition>
   );
 };
 
