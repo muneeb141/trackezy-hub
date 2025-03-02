@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { 
   FileText, 
@@ -14,7 +15,6 @@ import {
 import { Button } from '@/components/ui/button';
 import { PageTransition } from '@/components/ui/PageTransition';
 import { cn } from '@/lib/utils';
-import { Badge } from '@/components/ui/badge';
 
 // Sample document data
 const initialDocuments = [
@@ -130,9 +130,12 @@ const DocumentCard = ({ document }: { document: Document }) => (
     </div>
     <div className="flex flex-wrap gap-1 mt-2">
       {document.tags.map(tag => (
-        <Badge key={tag} status="todo" className="bg-gray-100 text-gray-800">
+        <span
+          key={tag}
+          className="bg-gray-100 text-gray-800 inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium transition-colors"
+        >
           {tag}
-        </Badge>
+        </span>
       ))}
     </div>
   </div>

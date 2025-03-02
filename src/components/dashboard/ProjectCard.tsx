@@ -2,7 +2,7 @@
 import React from 'react';
 import { MoreHorizontal, Calendar } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { Avatar } from '@/components/ui/avatar';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { cn } from '@/lib/utils';
 
 type ProjectCardProps = {
@@ -30,6 +30,13 @@ export const ProjectCard = ({ project, className }: ProjectCardProps) => {
     'blocked': 'Blocked',
   };
 
+  const statusColors = {
+    'todo': 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-100',
+    'in-progress': 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100',
+    'done': 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100',
+    'blocked': 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100',
+  };
+
   const formatDate = (dateString?: string) => {
     if (!dateString) return '';
     const date = new Date(dateString);
@@ -47,7 +54,12 @@ export const ProjectCard = ({ project, className }: ProjectCardProps) => {
       )}
     >
       <div className="flex justify-between items-start mb-3">
-        <Badge status={project.status}>{statusLabel[project.status]}</Badge>
+        <span className={cn(
+          'inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold transition-colors',
+          statusColors[project.status]
+        )}>
+          {statusLabel[project.status]}
+        </span>
         <button className="text-muted-foreground hover:text-foreground rounded-full h-8 w-8 flex items-center justify-center transition-colors">
           <MoreHorizontal className="h-4 w-4" />
           <span className="sr-only">More options</span>
@@ -79,11 +91,16 @@ export const ProjectCard = ({ project, className }: ProjectCardProps) => {
             {project.team.slice(0, 3).map((member) => (
               <Avatar 
                 key={member.id}
-                name={member.name}
-                src={member.avatar}
-                size="sm"
-                className="border-2 border-background"
-              />
+                className="border-2 border-background h-6 w-6"
+              >
+                {member.avatar ? (
+                  <AvatarImage src={member.avatar} alt={member.name} />
+                ) : (
+                  <AvatarFallback>
+                    {member.name.charAt(0)}
+                  </AvatarFallback>
+                )}
+              </Avatar>
             ))}
             {project.team.length > 3 && (
               <div className="relative flex h-6 w-6 items-center justify-center rounded-full border-2 border-background bg-muted text-xs font-medium">
