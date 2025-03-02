@@ -1,8 +1,8 @@
 
 import React from 'react';
 import { MoreHorizontal, Calendar } from 'lucide-react';
-import { Badge } from '@/components/ui/Badge';
-import { Avatar } from '@/components/ui/Avatar';
+import { Badge } from '@/components/ui/badge';
+import { Avatar } from '@/components/ui/avatar';
 import { cn } from '@/lib/utils';
 
 type ProjectCardProps = {

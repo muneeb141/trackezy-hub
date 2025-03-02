@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { 
   FileText, 
@@ -15,7 +14,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { PageTransition } from '@/components/ui/PageTransition';
 import { cn } from '@/lib/utils';
-import { Badge } from '@/components/ui/Badge';
+import { Badge } from '@/components/ui/badge';
 
 // Sample document data
 const initialDocuments = [
